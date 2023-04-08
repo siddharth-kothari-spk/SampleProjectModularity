@@ -8,6 +8,7 @@ class SearchAdService {
     func load(filter: String?, completion: ([SearchAdModel]) -> Void) {
         getAds {ads in
             completion(ads)
+          //  completion(ads) // to fail test case
         }
     }
 }

@@ -33,7 +33,7 @@ class SearchAdServiceTests: XCTestCase {
         let testSM = makeTestSM(ads: [ad1, ad2])
         var receivedAds = [SearchAdModel]()
         testSM.load(filter: nil) { ads in
-            receivedAds += ads
+            receivedAds += ads // always use addition instead of assigning as if completionHandler is called twice , it will not fail in case of assignment
         }
         
         XCTAssertEqual(receivedAds, [ad1, ad2]) // error : Global function 'XCTAssertEqual(_:_:_:file:line:)' requires that 'SearchAdModel' conform to 'Equatable'
