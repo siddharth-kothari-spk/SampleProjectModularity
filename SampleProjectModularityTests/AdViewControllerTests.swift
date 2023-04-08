@@ -33,6 +33,25 @@ final class AdViewControllerTests: XCTestCase {
     
     func test_viewDidLoad_withoutFilter_defaultValues() {
         let testVC = makeTestVC(filter: nil)
+        testVC.loadViewIfNeeded()
+        
+        XCTAssertEqual(testVC.tableView.numberOfRows(inSection: 0), 0)
+        
+        // to be used if setup in code
+      /*  XCTAssertEqual(testVC.filterButton.title(for: .normal), "Filter")
+          XCTAssertEqual(testVC.carsOnlyButton.title(for: .normal), "Cars Only")
+        */
+        
+        // to be used if setup in storyboard
+        XCTAssertEqual(testVC.filterButton.configuration?.title, "Filter")
+        XCTAssertEqual(testVC.carsOnlyButton.configuration?.title, "Cars Only")
+        
+        
+        XCTAssertEqual(testVC.carsOnlyButton.tintColor, .red)
+        XCTAssertEqual(testVC.numberOfFiltersLabel.text, "0 filters")
+
+
+        
     }
     
     private func makeTestVC(filter: String?) -> AdViewController {
@@ -40,6 +59,7 @@ final class AdViewControllerTests: XCTestCase {
         let testVC = sb.instantiateViewController(identifier: "AdViewController") {coder in
             return AdViewController(coder: coder, filteredText: filter)
         }
+        testVC.getAds = { _ in }
         return testVC
     }
 
