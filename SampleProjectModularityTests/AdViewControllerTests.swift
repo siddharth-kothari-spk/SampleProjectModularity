@@ -49,10 +49,20 @@ final class AdViewControllerTests: XCTestCase {
         
         XCTAssertEqual(testVC.carsOnlyButton.tintColor, .red)
         XCTAssertEqual(testVC.numberOfFiltersLabel.text, "0 filters")
-
-
-        
     }
+    
+    
+    func test_viewDidLoad_withFilter_defaultValues() {
+        let testVC = makeTestVC(filter: "a filter")
+        testVC.loadViewIfNeeded()
+        
+        XCTAssertEqual(testVC.tableView.numberOfRows(inSection: 0), 0)
+        XCTAssertEqual(testVC.filterButton.title(for: .normal), "Filter is a filter")
+        XCTAssertEqual(testVC.carsOnlyButton.configuration?.title, "Cars Only")
+        XCTAssertEqual(testVC.carsOnlyButton.tintColor, .red)
+        XCTAssertEqual(testVC.numberOfFiltersLabel.text, "1 filters")
+    }
+    
     
     private func makeTestVC(filter: String?) -> AdViewController {
         let sb = UIStoryboard(name: "Main", bundle: nil)

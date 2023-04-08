@@ -41,6 +41,7 @@ class AdViewController: UIViewController {
     var searchParameters = SearchParametersModel()
     var carsOnlyFilter: Bool = false
     var filteredText: String? {
+        // didSet and willSet does nt work till variable has been fully initialized , so wnt work from init method
         didSet {
             searchParameters.filteredText = filteredText
         }
@@ -50,14 +51,22 @@ class AdViewController: UIViewController {
     }
     
     init?(coder: NSCoder, filteredText: String?) {
-        self.filteredText = filteredText
         super.init(coder: coder)
+        defer { self.filteredText = filteredText }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         loadAds()
+        
+        // filterButton title not getting set on viewDidLoad
+        if let filteredText = searchParameters.filteredText {
+            filterButton.setTitle("Filter is \(filteredText)", for: .normal)
+        } else {
+            filterButton.setTitle("Filter", for: .normal)
+        }
+        
         calculateCountOfFilters()
         GAnalytic.sharedInstance.customDimensions = ["loading"]
         GAnalytic.sharedInstance.sendEvent(eventName: "PageLoaded")
