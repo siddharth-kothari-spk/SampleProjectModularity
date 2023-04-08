@@ -52,6 +52,26 @@ final class AdViewControllerTests: XCTestCase {
     }
     
     
+    func test_viewDidLoad_withoutFilter_loadAds_withoutFilter() {
+        let ad1 = makeAd(name: "name1", price: "price1", seller: "seller1")
+        let ad2 = makeAd(name: "name2", price: "price2", seller: "seller2")
+        let testVC = makeTestVC(filter: nil, ads: [ad1, ad2])
+        testVC.loadViewIfNeeded()
+        
+        XCTAssertEqual(testVC.tableView.numberOfRows(inSection: 0), 2)
+        let cell1 = testVC.tableView.dataSource?.tableView(testVC.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? AdTableViewCell
+        XCTAssertEqual(cell1?.nameText.text, "name1")
+        XCTAssertEqual(cell1?.priceText.text, "price1")
+        XCTAssertEqual(cell1?.sellerNameText.text, "seller1")
+        
+        let cell2 = testVC.tableView.dataSource?.tableView(testVC.tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? AdTableViewCell
+        XCTAssertEqual(cell2?.nameText.text, "name2")
+        XCTAssertEqual(cell2?.priceText.text, "price2")
+        XCTAssertEqual(cell2?.sellerNameText.text, "seller2")
+
+    }
+    
+    
     func test_viewDidLoad_withFilter_defaultValues() {
         let testVC = makeTestVC(filter: "a filter")
         testVC.loadViewIfNeeded()
@@ -64,13 +84,23 @@ final class AdViewControllerTests: XCTestCase {
     }
     
     
-    private func makeTestVC(filter: String?) -> AdViewController {
+    private func makeTestVC(filter: String?, ads: [SearchAdModel] = []) -> AdViewController {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let testVC = sb.instantiateViewController(identifier: "AdViewController") {coder in
             return AdViewController(coder: coder, filteredText: filter)
         }
-        testVC.getAds = { _ in }
+        testVC.getAds = { completion in completion(ads) }
         return testVC
     }
-
+    
+    private func makeAd(name: String, price: String, seller: String) -> SearchAdModel {
+        SearchAdModel(ad: AdModel(id: UUID(),
+                                  name: name,
+                                  price: Price(priceAmount: 0,
+                                               priceString: price),
+                                  seller: Seller(name: seller,
+                                                 website: nil),
+                                  image: nil),
+                      searchedQuery: "any search query")
+    }
 }
