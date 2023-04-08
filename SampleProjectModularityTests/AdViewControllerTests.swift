@@ -64,8 +64,7 @@ class SearchAdServiceTests: XCTestCase {
         XCTAssertEqual(receivedAds, [ad2])
     }
     private func makeTestSM(ads: [SearchAdModel] = []) -> SearchAdService {
-        let searchModelService = SearchAdService()
-        searchModelService.getAds = { $0(ads) }
+        let searchModelService = SearchAdService { $0(ads)}
         return searchModelService
     }
 }

@@ -3,10 +3,14 @@ import Kingfisher
 
 
 class SearchAdService {
-    var getAds: (([SearchAdModel]) -> Void) -> Void = NetworkClient.sharedInstance.getAds
+    
+    private let loader: (([SearchAdModel]) -> Void) -> Void
 
+    init(loader: @escaping (([SearchAdModel]) -> Void) -> Void = NetworkClient.sharedInstance.getAds) {
+        self.loader = loader
+    }
     func load(filters: [String], completion: ([SearchAdModel]) -> Void) {
-        getAds {ads in
+        loader {ads in
           //  completion(ads)
           //  completion(ads) // to fail test case
             guard !filters.isEmpty else {
