@@ -52,6 +52,17 @@ class SearchAdServiceTests: XCTestCase {
         XCTAssertEqual(receivedAds, [ad1])
     }
     
+    func test_load_withMultipleFilter() {
+        let ad1 = makeAd(name: "name1", price: "price1", seller: "seller1")
+        let ad2 = makeAd(name: "name2", price: "price2", seller: "seller2")
+        let testSM = makeTestSM(ads: [ad1, ad2])
+        var receivedAds = [SearchAdModel]()
+        testSM.load(filters: ["na","me","2"]) { ads in
+            receivedAds += ads
+        }
+
+        XCTAssertEqual(receivedAds, [ad2])
+    }
     private func makeTestSM(ads: [SearchAdModel] = []) -> SearchAdService {
         let searchModelService = SearchAdService()
         searchModelService.getAds = { $0(ads) }
