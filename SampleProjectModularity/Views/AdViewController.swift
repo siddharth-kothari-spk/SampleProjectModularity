@@ -1,38 +1,6 @@
 import UIKit
 import Kingfisher
 
-
-class SearchAdService {
-    
-    private let loader: (([SearchAdModel]) -> Void) -> Void
-
-    init(loader: @escaping (([SearchAdModel]) -> Void) -> Void = NetworkClient.sharedInstance.getAds) {
-        self.loader = loader
-    }
-    func load(filters: [String], completion: ([SearchAdModel]) -> Void) {
-        loader {ads in
-          //  completion(ads)
-          //  completion(ads) // to fail test case
-            guard !filters.isEmpty else {
-                return completion(ads)
-            }
-            
-            let filteredAds = ads.compactMap { (item) -> SearchAdModel?  in
-                
-                for filter in filters {
-                    if !item.ad.name
-                        .lowercased()
-                        .contains(filter.lowercased()) {
-                        return nil
-                    }
-                }
-                return item
-            }
-            completion(filteredAds)
-        }
-    }
-}
-
 class AdViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var filterButton: UIButton!

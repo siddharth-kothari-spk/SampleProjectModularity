@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1D425BAE29E11783006EEF46 /* AdViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D425BAD29E11783006EEF46 /* AdViewControllerTests.swift */; };
+		1D425BB129E15D4E006EEF46 /* SearchAdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D425BB029E15D4E006EEF46 /* SearchAdService.swift */; };
+		1D425BB329E15D99006EEF46 /* SearchAdServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D425BB229E15D99006EEF46 /* SearchAdServiceTests.swift */; };
 		CD0AF5D328C21D4A00C598C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0AF5D228C21D4A00C598C8 /* AppDelegate.swift */; };
 		CD0AF5D528C21D4A00C598C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0AF5D428C21D4A00C598C8 /* SceneDelegate.swift */; };
 		CD0AF5D728C21D4A00C598C8 /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0AF5D628C21D4A00C598C8 /* AdViewController.swift */; };
@@ -48,6 +50,8 @@
 
 /* Begin PBXFileReference section */
 		1D425BAD29E11783006EEF46 /* AdViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdViewControllerTests.swift; sourceTree = "<group>"; };
+		1D425BB029E15D4E006EEF46 /* SearchAdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAdService.swift; sourceTree = "<group>"; };
+		1D425BB229E15D99006EEF46 /* SearchAdServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAdServiceTests.swift; sourceTree = "<group>"; };
 		CD0AF5CF28C21D4A00C598C8 /* SampleProjectModularity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleProjectModularity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD0AF5D228C21D4A00C598C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD0AF5D428C21D4A00C598C8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +102,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D425BAF29E15D2E006EEF46 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				1D425BB029E15D4E006EEF46 /* SearchAdService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		CD0AF5C628C21D4A00C598C8 = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +134,7 @@
 		CD0AF5D128C21D4A00C598C8 /* SampleProjectModularity */ = {
 			isa = PBXGroup;
 			children = (
+				1D425BAF29E15D2E006EEF46 /* Service */,
 				CDCF0F6E29AC0DC800876706 /* Delegates */,
 				CDCF0F6D29AC0D8800876706 /* Views */,
 				CDCF0F6C29AC0D5400876706 /* Models */,
@@ -142,6 +155,7 @@
 			children = (
 				CD0AF5E928C21D4C00C598C8 /* SampleProjectModularityTests.swift */,
 				1D425BAD29E11783006EEF46 /* AdViewControllerTests.swift */,
+				1D425BB229E15D99006EEF46 /* SearchAdServiceTests.swift */,
 			);
 			path = SampleProjectModularityTests;
 			sourceTree = "<group>";
@@ -331,6 +345,7 @@
 				CD0AF5D728C21D4A00C598C8 /* AdViewController.swift in Sources */,
 				CD0AF5D328C21D4A00C598C8 /* AppDelegate.swift in Sources */,
 				CD0AF60328C21D7500C598C8 /* Models.swift in Sources */,
+				1D425BB129E15D4E006EEF46 /* SearchAdService.swift in Sources */,
 				CD0AF60A28C3C64E00C598C8 /* AdViewModel.swift in Sources */,
 				CDCF0F7529AC115900876706 /* FilterViewController.swift in Sources */,
 				CD0AF5D528C21D4A00C598C8 /* SceneDelegate.swift in Sources */,
@@ -348,6 +363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD0AF5EA28C21D4C00C598C8 /* SampleProjectModularityTests.swift in Sources */,
+				1D425BB329E15D99006EEF46 /* SearchAdServiceTests.swift in Sources */,
 				1D425BAE29E11783006EEF46 /* AdViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
