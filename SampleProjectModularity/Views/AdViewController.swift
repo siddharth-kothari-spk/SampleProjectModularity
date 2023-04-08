@@ -5,10 +5,26 @@ import Kingfisher
 class SearchAdService {
     var getAds: (([SearchAdModel]) -> Void) -> Void = NetworkClient.sharedInstance.getAds
 
-    func load(filter: String?, completion: ([SearchAdModel]) -> Void) {
+    func load(filters: [String], completion: ([SearchAdModel]) -> Void) {
         getAds {ads in
-            completion(ads)
+          //  completion(ads)
           //  completion(ads) // to fail test case
+            guard !filters.isEmpty else {
+                return completion(ads)
+            }
+            
+            let filteredAds = ads.compactMap { (item) -> SearchAdModel?  in
+                
+                for filter in filters {
+                    if !item.ad.name
+                        .lowercased()
+                        .contains(filter.lowercased()) {
+                        return nil
+                    }
+                }
+                return item
+            }
+            completion(filteredAds)
         }
     }
 }
