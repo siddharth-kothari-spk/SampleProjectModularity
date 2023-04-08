@@ -97,9 +97,12 @@ class AdViewController: UIViewController {
         }
         numberOfFiltersLabel.text = "\(count) filters"
     }
+    
+    var getAds: (([SearchAdModel]) -> Void) -> Void = NetworkClient.sharedInstance.getAds
+    
     // MARK: - Ad Network Calls
     private func loadAds(filteredText: String? = nil) {
-        NetworkClient.sharedInstance.getAds { [weak self]  ads in
+        getAds { [weak self]  ads in
             let filteredAds = ads.compactMap { item in
                 if carsOnlyFilter {
                     if item.ad.name.lowercased().contains("car") {
