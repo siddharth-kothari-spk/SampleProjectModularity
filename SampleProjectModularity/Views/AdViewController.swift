@@ -58,7 +58,7 @@ class AdViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        loadAds()
+        loadAds(filteredText: filteredText)
         
         // filterButton title not getting set on viewDidLoad
         if let filteredText = searchParameters.filteredText {

@@ -84,6 +84,20 @@ final class AdViewControllerTests: XCTestCase {
     }
     
     
+    func test_viewDidLoad_withFilter_loadAds_withFilter() {
+        let ad1 = makeAd(name: "name1", price: "price1", seller: "seller1")
+        let ad2 = makeAd(name: "name2", price: "price2", seller: "seller2")
+        let testVC = makeTestVC(filter: "name1", ads: [ad1, ad2])
+        testVC.loadViewIfNeeded()
+        
+        XCTAssertEqual(testVC.filteredText, "name1" )
+        XCTAssertEqual(testVC.tableView.numberOfRows(inSection: 0), 1)
+        let cell1 = testVC.tableView.dataSource?.tableView(testVC.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? AdTableViewCell
+        XCTAssertEqual(cell1?.nameText.text, "name1")
+        XCTAssertEqual(cell1?.priceText.text, "price1")
+        XCTAssertEqual(cell1?.sellerNameText.text, "seller1")
+    }
+    
     private func makeTestVC(filter: String?, ads: [SearchAdModel] = []) -> AdViewController {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let testVC = sb.instantiateViewController(identifier: "AdViewController") {coder in
