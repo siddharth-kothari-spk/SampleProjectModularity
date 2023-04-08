@@ -82,7 +82,8 @@ class AdViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init?(coder: NSCoder, filteredText: String?) {
+    init?(coder: NSCoder, filteredText: String?, service: SearchAdService = SearchAdService(loader: NetworkClient.sharedInstance.getAds)) {
+        self.service = service
         super.init(coder: coder)
         defer { self.filteredText = filteredText }
     }
@@ -141,37 +142,13 @@ class AdViewController: UIViewController {
     
     var getAds: (([SearchAdModel]) -> Void) -> Void = NetworkClient.sharedInstance.getAds
     
+    private let service: SearchAdService
     // MARK: - Ad Network Calls
     private func loadAds(filteredText: String? = nil) {
-        getAds { [weak self]  ads in
-            let filteredAds = ads.compactMap { item in
-                if carsOnlyFilter {
-                    if item.ad.name.lowercased().contains("car") {
-                        if let filteredText = filteredText  {
-                            if item.ad.name.lowercased().contains(filteredText.lowercased()) {
-                                return item
-                            } else {
-                                return nil
-                            }
-                        } else {
-                            return item
-                        }
-                    } else {
-                        return nil
-                    }
-                } else {
-                    if let filteredText = filteredText  {
-                        if item.ad.name.lowercased().contains(filteredText.lowercased()) {
-                            return item
-                        } else {
-                            return nil
-                        }
-                    } else {
-                        return item
-                    }
-                }
-            }
-            self?.ads = filteredAds
+        service.load(filters: [
+            carsOnlyFilter ? "car" : nil,
+            filteredText].compactMap{ $0 }) { [weak self]  ads in
+            self?.ads = ads
         }
     }
 }

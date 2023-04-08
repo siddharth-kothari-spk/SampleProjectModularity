@@ -146,7 +146,7 @@ final class AdViewControllerTests: XCTestCase {
     private func makeTestVC(filter: String?, ads: [SearchAdModel] = []) -> AdViewController {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let testVC = sb.instantiateViewController(identifier: "AdViewController") {coder in
-            return AdViewController(coder: coder, filteredText: filter)
+            return AdViewController(coder: coder, filteredText: filter, service: SearchAdService(loader: { completion in completion(ads) }))
         }
         testVC.getAds = { completion in completion(ads) }
         return testVC
