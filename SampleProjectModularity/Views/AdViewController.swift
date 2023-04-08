@@ -1,6 +1,17 @@
 import UIKit
 import Kingfisher
 
+
+class SearchAdService {
+    var getAds: (([SearchAdModel]) -> Void) -> Void = NetworkClient.sharedInstance.getAds
+
+    func load(filter: String?, completion: ([SearchAdModel]) -> Void) {
+        getAds {ads in
+            completion(ads)
+        }
+    }
+}
+
 class AdViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var filterButton: UIButton!
@@ -38,9 +49,9 @@ class AdViewController: UIViewController {
             tableView.reloadData()
         }
     }
-    var searchParameters = SearchParametersModel()
-    var carsOnlyFilter: Bool = false
-    var filteredText: String? {
+    private var searchParameters = SearchParametersModel()
+    private var carsOnlyFilter: Bool = false
+    private (set) var filteredText: String? {
         // didSet and willSet does nt work till variable has been fully initialized , so wnt work from init method
         didSet {
             searchParameters.filteredText = filteredText

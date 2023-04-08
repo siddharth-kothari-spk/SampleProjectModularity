@@ -24,6 +24,28 @@
  */
 import XCTest
 @testable import SampleProjectModularity
+
+class SearchAdServiceTests: XCTestCase {
+    
+    func test_load_withoutFilter() {
+        let ad1 = makeAd(name: "name1", price: "price1", seller: "seller1")
+        let ad2 = makeAd(name: "name2", price: "price2", seller: "seller2")
+        let testSM = makeTestSM(ads: [ad1, ad2])
+        var receivedAds = [SearchAdModel]()
+        testSM.load(filter: nil) { ads in
+            receivedAds += ads
+        }
+        
+        XCTAssertEqual(receivedAds, [ad1, ad2]) // error : Global function 'XCTAssertEqual(_:_:_:file:line:)' requires that 'SearchAdModel' conform to 'Equatable'
+    }
+    
+    private func makeTestSM(ads: [SearchAdModel] = []) -> SearchAdService {
+        let searchModelService = SearchAdService()
+        searchModelService.getAds = { $0(ads) }
+        return searchModelService
+    }
+}
+
 final class AdViewControllerTests: XCTestCase {
     
     func test_canInit() {
@@ -106,15 +128,16 @@ final class AdViewControllerTests: XCTestCase {
         testVC.getAds = { completion in completion(ads) }
         return testVC
     }
-    
-    private func makeAd(name: String, price: String, seller: String) -> SearchAdModel {
-        SearchAdModel(ad: AdModel(id: UUID(),
-                                  name: name,
-                                  price: Price(priceAmount: 0,
-                                               priceString: price),
-                                  seller: Seller(name: seller,
-                                                 website: nil),
-                                  image: nil),
-                      searchedQuery: "any search query")
-    }
+}
+
+
+private func makeAd(name: String, price: String, seller: String) -> SearchAdModel {
+    SearchAdModel(ad: AdModel(id: UUID(),
+                              name: name,
+                              price: Price(priceAmount: 0,
+                                           priceString: price),
+                              seller: Seller(name: seller,
+                                             website: nil),
+                              image: nil),
+                  searchedQuery: "any search query")
 }

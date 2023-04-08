@@ -1,6 +1,10 @@
 import Foundation
 
-class AdModel {
+class AdModel: Equatable {
+    static func == (lhs: AdModel, rhs: AdModel) -> Bool {
+        lhs === rhs
+    }
+    
     init(id: AnyHashable, name: String, price: Price, seller: Seller, image: String?) {
         self.id = id
         self.name = name
@@ -19,18 +23,18 @@ class AdModel {
     }
 }
 
-struct Seller {
+struct Seller: Equatable {
     let name: String
     let website: String?
 }
 
-struct Price {
+struct Price: Equatable {
     let priceAmount: Double
     let priceString: String
 }
 
 
-struct SearchAdModel {
+struct SearchAdModel: Equatable {
     let ad: AdModel
     let searchedQuery: String
 }
